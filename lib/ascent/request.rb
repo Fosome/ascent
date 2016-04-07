@@ -40,7 +40,8 @@ module Ascent
 
     def headers
       {
-        "X-Starfighter-Authorization" => api_key
+        "Content-Type"                => "application/json",
+        "X-Starfighter-Authorization" => api_key,
       }
     end
 

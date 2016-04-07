@@ -7,36 +7,44 @@ module Ascent
     end
 
     def bid
-      response.parsed_body.fetch("bid")
+      fetch("bid")
     end
 
     def bid_size
-      response.parsed_body.fetch("bidSize")
+      fetch("bidSize")
     end
 
     def bid_depth
-      response.parsed_body.fetch("bidDepth")
+      fetch("bidDepth")
     end
 
     def ask
-      response.parsed_body.fetch("ask")
+      fetch("ask")
     end
 
     def ask_size
-      response.parsed_body.fetch("askSize")
+      fetch("askSize")
     end
 
     def ask_depth
-      response.parsed_body.fetch("askDepth")
+      fetch("askDepth")
     end
 
     def spread
       ask - bid
     end
 
+    def spread?
+      ask > 0 && bid > 0
+    end
+
     private
 
     attr_reader :venue, :stock
+
+    def fetch(key, default = 0)
+      response.parsed_body.fetch(key, default)
+    end
 
     def response
       @response ||= request.response
@@ -47,7 +55,7 @@ module Ascent
     end
 
     def path
-      "venues/#{venue.to_s}/stocks/#{stock.to_s}/quote"
+      "venues/#{venue}/stocks/#{stock}/quote"
     end
   end
 end
